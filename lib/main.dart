@@ -60,7 +60,10 @@ class MyAppState extends State<MyApp> {
                 child: Column(
                 children: [
                   Text("Completed"),
-                  ElevatedButton(
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        primary: Colors.teal,
+                        side: BorderSide(color: Colors.blue)),
                     child: Text("Restart Quiz"),
                     onPressed: (() {
                       setState(() {
