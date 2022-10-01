@@ -16,42 +16,60 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  var questions = [
+    {
+      'questionText': "What is capital of USA?",
+      'answers': ['WDC', 'florida', 'New York', 'Texas'],
+      'correctanswer': "WDC"
+    },
+    {
+      'questionText': "What is capital of UK?",
+      'answers': ['WDC', 'London', 'New York', 'Sweden'],
+      'correctanswer': "London"
+    }
+  ];
   var _questionIndex = 0;
   void correctanswer() {
+    // if (answer == questions[_questionIndex]['correctanswer']) {
     setState(() {
       _questionIndex = _questionIndex + 1;
-      print("second answer");
+      //here we have to get that clicked answer
     });
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'questionText': "What is capital of USA?",
-        'answers': ['WDC', 'florida', 'New York', 'Texas']
-      },
-      {
-        'questionText': "What is capital of UK?",
-        'answers': ['WDC', 'London', 'New York', 'Sweden']
-      }
-    ];
-
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Welcome to Flutter'),
         ),
-        body: Column(
-          children: [
-            Question(questions[_questionIndex]['questionText'] as String),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(correctanswer, answer);
-            })
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                children: [
+                  Question(questions[_questionIndex]['questionText'] as String),
+                  ...(questions[_questionIndex]['answers'] as List<String>)
+                      .map((answer) {
+                    return Answer(correctanswer, answer);
+                  })
+                ],
+              )
+            : Center(
+                child: Column(
+                children: [
+                  Text("Completed"),
+                  ElevatedButton(
+                    child: Text("Restart Quiz"),
+                    onPressed: (() {
+                      setState(() {
+                        _questionIndex = 0;
+                      });
+                    }),
+                  )
+                ],
+              )),
       ),
     );
   }
